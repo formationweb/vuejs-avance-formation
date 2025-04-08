@@ -1,4 +1,5 @@
 <template>
+    <h1>Mon App</h1>
     <select v-model="extSelected">
         <option value="">Tous</option>
         <option v-for="ext in extensions">{{ ext }}</option>
@@ -13,8 +14,8 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useExtensionFilter } from './composables/useExtensionFilter';
-import { useFetchUsers } from './composables/useFetchUsers';
+import { useExtensionFilter } from '../composables/useExtensionFilter';
+import { useFetchUsers } from '../composables/useFetchUsers';
 
 const { users, loading, getUsers } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
