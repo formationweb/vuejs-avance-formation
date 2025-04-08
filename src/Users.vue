@@ -1,19 +1,25 @@
 <template>
-    <article v-for="user in users" :key="user.id">
-        <header>{{ user.name }}</header>
-        <p>{{ user.email }}</p>
-    </article>
+    <select v-model="extSelected">
+        <option value="">Tous</option>
+        <option v-for="ext in extensions">{{ ext }}</option>
+    </select>
+    <div :aria-busy="loading">
+        <article v-for="user in usersFiltered" :key="user.id">
+            <header>{{ user.name }}</header>
+            <p>{{ user.email }}</p>
+        </article>
+    </div>
 </template>
 
 <script setup lang="ts">
-import axios from 'axios';
-import { onMounted, ref } from 'vue';
-import type { User } from './types/user';
+import { onMounted } from 'vue';
+import { useExtensionFilter } from './composables/useExtensionFilter';
+import { useFetchUsers } from './composables/useFetchUsers';
 
-const users = ref<User[]>([])
+const { users, loading, getUsers } = useFetchUsers()
+const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 
 onMounted(async () => {
-    const res = await axios.get('https://jsonplaceholder.typicode.com/users')
-    users.value = res.data
+   await getUsers()
 })
 </script>
