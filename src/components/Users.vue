@@ -5,10 +5,7 @@
         <option v-for="ext in extensions">{{ ext }}</option>
     </select>
     <div :aria-busy="loading">
-        <article v-for="user in usersFiltered" :key="user.id">
-            <header>{{ user.name }}</header>
-            <p>{{ user.email }}</p>
-        </article>
+        <UserCard v-for="user in usersFiltered" :key="user.id" :user="user" />
     </div>
 </template>
 
@@ -16,6 +13,7 @@
 import { onMounted } from 'vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
 import { useFetchUsers } from '../composables/useFetchUsers';
+import UserCard from './UserCard.vue';
 
 const { users, loading, getUsers } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)

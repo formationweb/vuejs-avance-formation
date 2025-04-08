@@ -4,6 +4,7 @@ import Users from '../Users.vue'
 import axios from 'axios'
 import { User } from "../../types/user";
 import { nextTick } from "vue";
+import UserCard from "../UserCard.vue";
 
 vi.mock('axios')
 
@@ -20,16 +21,12 @@ describe('Users Component', () => {
         (axios.get as any).mockResolvedValue({
             data: mockUsers
         })
-        component = mount(Users, {
-            // props: {
-            //     title: 'Mon App'
-            // }
-        })
+        component = mount(Users)
         await flushPromises()
     })
 
-    test('Vérifier la balise article', async () => {
-        const elements = component.findAll('article')
+    test('Vérifier si UserCard est appliqué en boucle', () => {
+        const elements = component.findAllComponents(UserCard)
         expect(elements).toHaveLength(1)
     })
 
