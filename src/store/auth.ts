@@ -10,6 +10,10 @@ export const useAuthStore = defineStore('auth', () => {
     const passwordForm = ref('')
     const hasToken = computed(() => !!token.value)
 
+    async function validateToken() {
+        await axios.post('/api/validate', token.value)
+    }
+
     async function login() {
         const res = await axios.post('https://reqres.in/api/login', {
             email: emailForm.value,
@@ -24,6 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
         login,
         emailForm,
         passwordForm,
-        hasToken
+        hasToken,
+        validateToken
     }
 })

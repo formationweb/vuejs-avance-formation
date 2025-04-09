@@ -17,6 +17,10 @@
         <button>Créer</button>
     </form>
 
+    <div v-for="history in userStore.$history">
+        {{ history.storeId  }} - {{ history.timestamp  }}
+    </div>
+
     <select v-model="extSelected">
         <option value="">Tous</option>
         <option v-for="ext in extensions">{{ ext }}</option>
@@ -36,8 +40,10 @@ import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 
 const userStore = useUserStore()
-const { users, loading } = storeToRefs(userStore)
-const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
+const { usersSearched, loading } = storeToRefs(userStore)
+const { extSelected, extensions, usersFiltered } = useExtensionFilter(usersSearched)
+
+console.log(userStore.$history)
 
 const isSubmitting = ref(false)
 const { handleSubmit, defineField, errors, resetForm } = useForm({
@@ -54,6 +60,7 @@ const createUser = handleSubmit(async (values) => {
     await userStore.createUser(values as UserPayload)
     resetForm()
     isSubmitting.value = false
+    userStore.$clearHistory()
 }, () => {
     isSubmitting.value = true
 })
