@@ -5,6 +5,7 @@ import axios from 'axios'
 import { User } from "../../types/user";
 import { nextTick } from "vue";
 import UserCard from "../UserCard.vue";
+import { createTestingPinia } from "@pinia/testing";
 
 vi.mock('axios')
 
@@ -21,7 +22,16 @@ describe('Users Component', () => {
         (axios.get as any).mockResolvedValue({
             data: mockUsers
         })
-        component = mount(Users)
+        component = mount(Users, {
+            global: {
+                plugins: [
+                    createTestingPinia({
+                        createSpy: vi.fn,
+                        stubActions: false
+                    })
+                ]
+            }
+        })
         await flushPromises()
     })
 

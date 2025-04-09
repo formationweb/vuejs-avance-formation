@@ -1,24 +1,66 @@
 <template>
     <h1>Mon App</h1>
+
+    <h2>Ajouter un utilisateur</h2>
+
+    <form @submit.prevent="createUser">
+        <label>Email</label>
+        <input type="text" v-model="email" v-bind="emailAttrs">
+         <div v-if="isSubmitting">
+            {{ errors.email }}
+         </div>
+
+        <label>Nom</label>
+        <input type="text" v-model="name" v-bind="nameAttrs">
+        <div v-if="isSubmitting">
+            {{ errors.name }}
+        </div>
+
+        <button>Créer</button>
+    </form>
+
     <select v-model="extSelected">
         <option value="">Tous</option>
         <option v-for="ext in extensions">{{ ext }}</option>
     </select>
     <div :aria-busy="loading">
-        <UserCard v-for="user in usersFiltered" :key="user.id" :user="user" />
+        <UserCard v-for="user in usersFiltered" :key="user.id" :user="user" @on-delete="userStore.deleteUser" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
-import { useFetchUsers } from '../composables/useFetchUsers';
 import UserCard from './UserCard.vue';
+import { useUserStore, type UserPayload } from '../store/user';
+import { storeToRefs } from 'pinia';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
 
-const { users, loading, getUsers } = useFetchUsers()
+const userStore = useUserStore()
+const { users, loading } = storeToRefs(userStore)
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 
+const isSubmitting = ref(false)
+const { handleSubmit, defineField, errors, resetForm } = useForm({
+    validationSchema: object({
+        email: string().email('Email invalide').required(),
+        name: string().required()
+    })
+})
+
+const [email, emailAttrs] = defineField('email')
+const [name, nameAttrs] = defineField('name')
+
+const createUser = handleSubmit(async (values) => {
+    await userStore.createUser(values as UserPayload)
+    resetForm()
+    isSubmitting.value = false
+}, () => {
+    isSubmitting.value = true
+})
+
 onMounted(async () => {
-   await getUsers()
+   await userStore.getUsers()
 })
 </script>
