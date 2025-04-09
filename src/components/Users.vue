@@ -1,6 +1,4 @@
 <template>
-    <h1>Mon App</h1>
-
     <h2>Ajouter un utilisateur</h2>
 
     <form @submit.prevent="createUser">
