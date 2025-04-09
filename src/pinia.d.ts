@@ -8,5 +8,11 @@ declare module 'pinia' {
             timestamp: Date
         }[]
         $clearHistory: () => void
+
+        $persistOptions: {
+            enabled: boolean,
+            storageKey: string
+        }
+        $clearPersistedState: () => void
     }
 }

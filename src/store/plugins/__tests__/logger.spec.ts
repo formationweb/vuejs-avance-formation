@@ -6,8 +6,10 @@ import { nextTick, ref } from "vue";
 import "../../../pinia.d";
 import { afterEach } from "node:test";
 
+type SpyInstance = ReturnType<typeof vi.spyOn>
+
 describe("piniaLogger plugin", () => {
-  let consoleSpy: { log: any; error: any };
+  let consoleSpy: { log: SpyInstance; error: SpyInstance };
 
   beforeEach(() => {
     const pinia = createPinia();
