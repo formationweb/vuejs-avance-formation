@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Users from "./components/Users.vue";
 import Login from "./pages/Login.vue";
-import { useAuth } from "./composables/useAuth";
+import { useAuthStore } from "./store/auth";
 
 export const routes = [
      {
@@ -25,8 +25,8 @@ export const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-   const { token } = useAuth()
-   if (to.meta.requiredAuth && !token.value) {
+   const { hasToken } = useAuthStore()
+   if (to.meta.requiredAuth && !hasToken) {
       next({
          name: 'loginId'
       })

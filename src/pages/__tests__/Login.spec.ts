@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { mount, flushPromises, VueWrapper } from '@vue/test-utils'
 import axios from 'axios'
 import Login from '../Login.vue'
+import { createTestingPinia } from '@pinia/testing'
 
 vi.mock('axios')
 
@@ -14,7 +15,19 @@ describe('Login Component', () => {
                 token: 'test'
             }
         })
-        component = mount(Login)
+        component = mount(Login, {
+            global: {
+                plugins: [
+                    createTestingPinia({
+                        createSpy: vi.fn,
+                        stubActions: false,
+                        // initialState: {
+                        //     token: 'aaa'
+                        // }
+                    })
+                ]
+            }
+        })
     })
 
     test('Vérifier que soumission est ok', async () => {

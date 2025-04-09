@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useAuth } from "./composables/useAuth";
+import { useAuthStore } from "./store/auth";
 
 axios.interceptors.request.use((config) => {
-    const { token } = useAuth()
-    config.headers.Authorization = token.value
+    const { token } = useAuthStore()
+    config.headers.Authorization = token
     return config
 })

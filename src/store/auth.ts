@@ -1,12 +1,14 @@
 import axios from "axios";
-import { ref } from "vue";
+import { defineStore } from "pinia";
+import { computed, ref } from "vue";
 
 const KEY_STORAGE = 'token'
 
-export function useAuth() {
+export const useAuthStore = defineStore('auth', () => {
     const token = ref(localStorage.getItem(KEY_STORAGE))
     const emailForm = ref('')
     const passwordForm = ref('')
+    const hasToken = computed(() => !!token.value)
 
     async function login() {
         const res = await axios.post('https://reqres.in/api/login', {
@@ -21,6 +23,7 @@ export function useAuth() {
         token,
         login,
         emailForm,
-        passwordForm
+        passwordForm,
+        hasToken
     }
-}
+})

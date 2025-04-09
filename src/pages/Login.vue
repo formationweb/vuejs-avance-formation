@@ -12,13 +12,15 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { useAuth } from '../composables/useAuth';
+import { useAuthStore } from '../store/auth';
+import { storeToRefs } from 'pinia';
 
-const { emailForm, passwordForm, login } = useAuth()
+const authStore = useAuthStore()
+const { emailForm, passwordForm } = storeToRefs(authStore)
 const router = useRouter()
 
 async function onLogin() {
-    await login()
-    router.push('/')
+    await authStore.login()
+   // router.push('/')
 }
 </script>
