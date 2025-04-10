@@ -5,6 +5,7 @@ import { useAuthStore } from "./store/auth";
 import Main from "./layouts/Main.vue";
 import { defineAsyncComponent } from "vue";
 import UsersDemo from "./components/UsersDemo.vue";
+import ImageDemo from "./components/ImageDemo.vue";
 
 const AsyncArticles = defineAsyncComponent(() => import('./pages/Articles.vue'))
 
@@ -36,6 +37,10 @@ export const routes = [
      {
       path: '/users-demo',
       component: UsersDemo
+     },
+     {
+      path: '/image-demo',
+      component: ImageDemo
      }
 ]
 

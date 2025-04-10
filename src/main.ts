@@ -10,6 +10,7 @@ import { piniaLogger } from './store/plugins/logger'
 import { piniaPersist } from './store/plugins/persist'
 import { confirmDirective } from './directives/confirm'
 import { tooltip } from './directives/tooltip'
+import { lazyLoad } from './directives/lazyload'
 
 const pinia = createPinia()
 pinia.use(piniaLogger())
@@ -23,5 +24,6 @@ app.use(pinia)
 
 app.directive('confirm', confirmDirective)
 app.directive('tooltip', tooltip)
+app.directive('lazyload', lazyLoad)
 
 app.mount('#app')
