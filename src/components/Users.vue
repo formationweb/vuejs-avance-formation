@@ -26,7 +26,11 @@
         <option v-for="ext in extensions">{{ ext }}</option>
     </select>
     <div :aria-busy="loading">
-        <UserCard v-for="user in usersFiltered" :key="user.id" :user="user" @on-delete="userStore.deleteUser" />
+        <UserCard v-for="user in usersFiltered" :key="user.id" :user="user" @on-delete="userStore.deleteUser">
+            <template #default="{ name, isActive }">
+                L'utilisateur {{  name }}  est {{ isActive  }}
+            </template>
+        </UserCard>
     </div>
 </template>
 

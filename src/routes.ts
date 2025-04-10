@@ -3,19 +3,27 @@ import Users from "./components/Users.vue";
 import Login from "./pages/Login.vue";
 import { useAuthStore } from "./store/auth";
 import Main from "./layouts/Main.vue";
+import { defineAsyncComponent } from "vue";
+
+const AsyncArticles = defineAsyncComponent(() => import('./pages/Articles.vue'))
 
 export const routes = [
      {
         path: '',
         component: Main,
-        name: 'home',
         meta: {
          requiredAuth: true
         },
         children: [
           {
             path: '',
-            component: Users
+            component: Users,
+            name: 'home'
+          },
+          {
+            path: 'articles',
+            component: AsyncArticles,
+            name: 'articlesId'
           }
         ]
      },
