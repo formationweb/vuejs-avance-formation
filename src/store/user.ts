@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import type { User } from "../types/user";
 
-const URL = "https://jsonplaceholder.typicode.com/users";
+const URL = import.meta.env.VITE_BASE_URL + "/users";
 
 export type UserPayload = {
   email: string;
