@@ -4,6 +4,7 @@ import Login from "./pages/Login.vue";
 import { useAuthStore } from "./store/auth";
 import Main from "./layouts/Main.vue";
 import { defineAsyncComponent } from "vue";
+import UsersDemo from "./components/UsersDemo.vue";
 
 const AsyncArticles = defineAsyncComponent(() => import('./pages/Articles.vue'))
 
@@ -31,6 +32,10 @@ export const routes = [
         path: '/login',
         component: Login,
         name: 'loginId'
+     },
+     {
+      path: '/users-demo',
+      component: UsersDemo
      }
 ]
 
