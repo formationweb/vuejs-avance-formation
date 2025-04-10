@@ -29,8 +29,17 @@ describe('Users Component', () => {
                         createSpy: vi.fn,
                         stubActions: false
                     })
-                ]
-            }
+                ],
+                stubs: {
+                    'router-link': true,
+                    // 'child-component': {
+                    //     template: '<div>contenu</contenu>',
+                    //     methods: {
+
+                    //     }
+                    // }
+                }
+            },
         })
         await flushPromises()
     })

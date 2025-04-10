@@ -1,8 +1,12 @@
 <template>
     <article>
+        <slot name="header"></slot>
         <header id="entete">{{ user.name }}</header>
         <p>{{ user.email }}</p>
-        <button @click="emits('onDelete', user.id)">Supprimer</button>
+        <button v-confirm="{
+            message: 'Etes vous ...',
+            onConfirm: () => emits('onDelete', user.id)
+        }" v-tooltip="'Faire une suppression'">Supprimer</button>
         <footer>
             <input type="checkbox" v-model="isActive">
             <slot :isActive v-bind="user"></slot>

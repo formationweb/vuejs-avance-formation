@@ -1,4 +1,5 @@
 import '@picocss/pico/css/pico.min.css'
+import './styles.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -7,6 +8,8 @@ import './interceptor'
 import { createPinia } from 'pinia'
 import { piniaLogger } from './store/plugins/logger'
 import { piniaPersist } from './store/plugins/persist'
+import { confirmDirective } from './directives/confirm'
+import { tooltip } from './directives/tooltip'
 
 const pinia = createPinia()
 pinia.use(piniaLogger())
@@ -17,5 +20,8 @@ pinia.use(piniaPersist({
 const app = createApp(App)
 app.use(router)
 app.use(pinia)
+
+app.directive('confirm', confirmDirective)
+app.directive('tooltip', tooltip)
 
 app.mount('#app')

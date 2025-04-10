@@ -1,6 +1,8 @@
 <template>
     <h2>Ajouter un utilisateur</h2>
 
+    <router-link :to="{ name: 'home' }">Home</router-link>
+
     <form @submit.prevent="createUser">
         <label>Email</label>
         <input type="text" v-model="email" v-bind="emailAttrs">

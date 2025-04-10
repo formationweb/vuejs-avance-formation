@@ -21,6 +21,6 @@ const router = useRouter()
 
 async function onLogin() {
     await authStore.login()
-   // router.push('/')
+    router.push('/')
 }
 </script>

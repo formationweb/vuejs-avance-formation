@@ -1,5 +1,5 @@
 <template>
-    <h1>Mon App</h1>
+    <h1>{{ title }}</h1>
 
     <nav>
         <ul>
@@ -20,10 +20,12 @@ import { ref } from 'vue';
 import { useUserStore } from '../store/user';
 import { storeToRefs } from 'pinia';
 
+const title = ref('Mon App')
+
 const userStore = useUserStore()
 const { firstNamesFiltered, searchName } = storeToRefs(userStore)
 
 function search() {
-
+    title.value = 'test'
 }
 </script>

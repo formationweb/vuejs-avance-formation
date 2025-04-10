@@ -3,6 +3,7 @@ import { mount, flushPromises, VueWrapper } from '@vue/test-utils'
 import axios from 'axios'
 import Login from '../Login.vue'
 import { createTestingPinia } from '@pinia/testing'
+import { router } from '../../routes'
 
 vi.mock('axios')
 
@@ -18,6 +19,7 @@ describe('Login Component', () => {
         component = mount(Login, {
             global: {
                 plugins: [
+                    router,
                     createTestingPinia({
                         createSpy: vi.fn,
                         stubActions: false,
